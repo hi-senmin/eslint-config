@@ -1,13 +1,55 @@
-### 文件描述
 
-- index.js
-全部项目一些共同的配置
+### 发布更新
 
-主要是以 airbnb-base 风格为主
+- release
 
-airbnb-base 官网地址： https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base
+1. 默认版本发布
+```bash
+npm run release
+```
 
-### 项目安装 eslint-config 依赖
+当前 package.json version 版本最后一位 +1 后，并发布版本包
+
+
+2. 指定版本发布
+
+```bash
+# 如想发布 2.2.2版本的包
+npm run release -- version=2.2.2
+
+# 不能发布比当前版本更低的包！！！
+```
+
+**注意**：
+
+    npm unpublish @senmin/eslint-config@<version> --registry  https://xxx.com
+
+    npm unpublish 命令只能删除 72 小时以内发布的包
+
+    npm unpublish 删除的包，在 24 小时内不允许重复发布
+
+
+### 依赖
+
+后续需要新增的依赖配置最好将依赖添加到 dependencies，避免项目中没有安装
+
+------
+------
+
+## 项目接入步骤
+
+#### 1. 配置私服 npm 镜像源
+
+- 根目录新建npm源配置文件 .npmrc
+
+  推荐该方法，一劳永逸🐂
+
+```
+  registry=https://registry.npm.taobao.org/
+```
+
+
+#### 2. 项目安装 eslint-config 依赖
 勿忘第一步 🙅🏻‍♀️
 
 ```bash
@@ -18,38 +60,7 @@ npm i @senmin/eslint-config -D
 npm update @senmin/eslint-config
 ```
 
-
-- vue.js
-  vue  项目接 vue.js
-
-```js
-// .eslintrc.js
-module.exports = {
-  extends: ['@senmin/eslint-config/vue'],
-};
-```
-
-- react.js
-
-  react项目
-
-```js
-// .eslintrc.js
-module.exports = {
-  extends: ['@senmin/eslint-config/react'],
-};
-```
-
-- update
-
-接入的项目更新版本依赖
-
-```bash
-npm update @senmin/eslint-config
-```
-
-
-#### 接入配置
+#### 3. 接入配置
 根目录新建文件 🚀
 
 - .prettierrc.js
@@ -113,8 +124,3 @@ templates
 node_modules
 ```
 
-
-
-### ⚠️⚠️⚠️警告⚠️⚠️⚠️
-
- 安装使用前请把项目中的其他 eslint 依赖包尽数移除，避免冲突导致lint不生效的异常！！！
